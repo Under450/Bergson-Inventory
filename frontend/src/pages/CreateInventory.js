@@ -569,6 +569,144 @@ const CreateInventory = () => {
             ))}
           </div>
 
+          {/* Alarm Compliance Checks */}
+          <div className="mb-8">
+            <h3 className="text-xl font-bold mb-4">Health & Safety Alarm Compliance Checks</h3>
+            <div className="space-y-4">
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Do all floors have smoke/heat alarms present?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_all_floors: true})}
+                    variant={alarmChecks.smoke_alarms_all_floors === true ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_all_floors === true ? "bg-green-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_all_floors: false})}
+                    variant={alarmChecks.smoke_alarms_all_floors === false ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_all_floors === false ? "bg-red-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Do all smoke/heat alarms have working test buttons?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_test_buttons: true})}
+                    variant={alarmChecks.smoke_alarms_test_buttons === true ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_test_buttons === true ? "bg-green-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_test_buttons: false})}
+                    variant={alarmChecks.smoke_alarms_test_buttons === false ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_test_buttons === false ? "bg-red-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Are any areas requiring a smoke/heat alarm missing an installed unit?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_missing_areas: true})}
+                    variant={alarmChecks.smoke_alarms_missing_areas === true ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_missing_areas === true ? "bg-red-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, smoke_alarms_missing_areas: false})}
+                    variant={alarmChecks.smoke_alarms_missing_areas === false ? "default" : "outline"}
+                    className={alarmChecks.smoke_alarms_missing_areas === false ? "bg-green-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Are carbon monoxide alarms present in rooms with a fuel burning source (excluding gas cooking appliances) or flue?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_present: true})}
+                    variant={alarmChecks.co_alarms_present === true ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_present === true ? "bg-green-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_present: false})}
+                    variant={alarmChecks.co_alarms_present === false ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_present === false ? "bg-red-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Do all carbon monoxide alarms have working test buttons?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_test_buttons: true})}
+                    variant={alarmChecks.co_alarms_test_buttons === true ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_test_buttons === true ? "bg-green-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_test_buttons: false})}
+                    variant={alarmChecks.co_alarms_test_buttons === false ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_test_buttons === false ? "bg-red-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border-2 border-gray-300 p-4 bg-gray-50">
+                <p className="font-semibold mb-3">Are any areas requiring a carbon monoxide alarm missing an installed unit?</p>
+                <div className="flex space-x-4">
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_missing_areas: true})}
+                    variant={alarmChecks.co_alarms_missing_areas === true ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_missing_areas === true ? "bg-red-600 text-white" : ""}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => setAlarmChecks({...alarmChecks, co_alarms_missing_areas: false})}
+                    variant={alarmChecks.co_alarms_missing_areas === false ? "default" : "outline"}
+                    className={alarmChecks.co_alarms_missing_areas === false ? "bg-green-600 text-white" : ""}
+                  >
+                    NO
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Compliance Documents */}
           <div>
             <h3 className="text-xl font-bold mb-4">Compliance Documents</h3>
