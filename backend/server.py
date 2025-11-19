@@ -308,6 +308,28 @@ async def submit_signature(token: str, signature_data: SignatureSubmit):
     
     return {"message": "Signature submitted successfully", "verification_link": f"/verify/{token}"}
 
+# Lock Document (finalize all signatures)
+@api_router.post("/sign/{token}/lock")
+async def lock_document(token: str):
+    inventory = await db.inventories.find_one({"shareable_link": token}, {"_id": 0})
+    if not inventory:
+        raise HTTPException(status_code=404, detail="Invalid link")
+    
+    existing_signature = inventory.get("signature", {})
+    if not existing_signature or len(existing_signature.get("signatures", [])) == 0:
+        raise HTTPException(status_code=400, detail="No signatures to lock")
+    
+    if existing_signature.get("is_locked"):
+        raise HTTPException(status_code=403, detail="Document already locked")
+    
+    # Lock the document
+    await db.inventories.update_one(
+        {"shareable_link": token},
+        {"$set": {"signature.is_locked": True, "status": "signed"}}
+    )
+    
+    return {"message": "Document locked successfully", "verification_link": f"/verify/{token}"}
+
 # Verify Signature
 @api_router.get("/verify/{token}")
 async def verify_signature(token: str):
