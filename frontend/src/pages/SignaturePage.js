@@ -55,24 +55,43 @@ const SignaturePage = () => {
     }
   };
 
-  const startDrawing = (e) => {
+  const getCoordinates = (e) => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
     
+    // Handle both mouse and touch events
+    if (e.touches && e.touches.length > 0) {
+      return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+      };
+    }
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  };
+
+  const startDrawing = (e) => {
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const coords = getCoordinates(e);
+    
     ctx.beginPath();
-    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.moveTo(coords.x, coords.y);
     setIsDrawing(true);
   };
 
   const draw = (e) => {
     if (!isDrawing) return;
+    e.preventDefault();
     
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
+    const coords = getCoordinates(e);
     
-    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.lineTo(coords.x, coords.y);
     ctx.stroke();
   };
 
