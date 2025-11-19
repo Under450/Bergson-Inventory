@@ -39,6 +39,14 @@ const CreateInventory = () => {
   const [meters, setMeters] = useState([]);
   const [safetyItems, setSafetyItems] = useState([]);
   const [complianceDocs, setComplianceDocs] = useState([]);
+  const [alarmChecks, setAlarmChecks] = useState({
+    smoke_alarms_all_floors: null,
+    smoke_alarms_test_buttons: null,
+    smoke_alarms_missing_areas: null,
+    co_alarms_present: null,
+    co_alarms_test_buttons: null,
+    co_alarms_missing_areas: null
+  });
   
   // Rooms
   const [rooms, setRooms] = useState([]);
