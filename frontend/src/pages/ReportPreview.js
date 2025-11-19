@@ -500,7 +500,7 @@ const ReportPreview = () => {
           
           <div className="space-y-4 text-gray-800">
             <p className="leading-relaxed">
-              The term 'Inspector' is used hereafter to define the Inventory Hive software user that is responsible for completing this property report. It is the duty and ultimate responsibility of the Inspector and Tenant to agree upon the accuracy of this report.
+              The term 'Inspector' is used hereafter to define the Bergason software user that is responsible for completing this property report. It is the duty and ultimate responsibility of the Inspector and Tenant to agree upon the accuracy of this report.
             </p>
 
             <p className="leading-relaxed">
