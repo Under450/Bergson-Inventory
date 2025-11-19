@@ -55,18 +55,26 @@ const CreateInventory = () => {
 
   const handlePropertyPhotoUpload = async (e) => {
     const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    
     for (const file of files) {
       const formData = new FormData();
       formData.append("file", file);
       
       try {
-        const response = await axios.post(`${API}/upload/property-photo`, formData);
+        const response = await axios.post(`${API}/upload/property-photo`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         setPropertyPhotos(prev => [...prev, response.data.file_path]);
         toast.success("Property photo uploaded");
       } catch (error) {
-        toast.error("Failed to upload photo");
+        console.error("Upload error:", error);
+        toast.error("Failed to upload photo: " + (error.response?.data?.detail || error.message));
       }
     }
+    e.target.value = null; // Reset input
   };
 
   const addMeter = () => {
