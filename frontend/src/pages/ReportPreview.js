@@ -436,21 +436,72 @@ const ReportPreview = () => {
         {(() => {
           const allPhotos = [];
           
-          // Collect all photos from all sources
-          inventory.property_overview.property_photos?.forEach(photo => {
-            allPhotos.push({ path: photo, reference: "Property Overview", description: "Property Photo" });
+          // Room code mapping for references
+          const roomCodes = {
+            "Hallway": "HW",
+            "Living Room": "LR",
+            "Dining Room": "DR",
+            "Kitchen": "KT",
+            "WC": "WC",
+            "Bathroom": "BT",
+            "Ensuite": "EN",
+            "Bedroom 1": "B1",
+            "Bedroom 2": "B2",
+            "Bedroom 3": "B3",
+            "Bedroom 4": "B4",
+            "Bedroom 5": "B5",
+            "Front Garden": "FG",
+            "Rear Garden": "RG",
+            "Porch": "PO",
+            "Stairs": "ST",
+            "Landing": "LD",
+            "Airing Cupboard": "AC",
+            "Meter Cupboard": "MC",
+            "Outbuilding": "OB",
+            "Garage": "GR",
+            "Loft": "LF",
+            "Misc First Floor": "MF"
+          };
+          
+          // Collect property photos
+          inventory.property_overview.property_photos?.forEach((photo, index) => {
+            allPhotos.push({ 
+              path: photo, 
+              reference: "Property Overview", 
+              description: "Property Photo",
+              photoRef: `PO-${index + 1}`,
+              date: inventory.property_overview.inspection_date
+            });
           });
           
-          inventory.health_safety?.meters?.forEach(meter => {
+          // Collect meter photos
+          inventory.health_safety?.meters?.forEach((meter, meterIndex) => {
             if (meter.photo) {
-              allPhotos.push({ path: meter.photo, reference: "Health & Safety", description: `${meter.meter_type} Meter - ${meter.location}` });
+              allPhotos.push({ 
+                path: meter.photo, 
+                reference: "Health & Safety", 
+                description: `${meter.meter_type} Meter`,
+                photoRef: `HS-${meterIndex + 1}`,
+                date: inventory.property_overview.inspection_date
+              });
             }
           });
           
-          inventory.rooms?.forEach(room => {
+          // Collect room photos with individual references
+          inventory.rooms?.forEach((room, roomIndex) => {
+            const roomCode = roomCodes[room.room_name] || `R${roomIndex + 1}`;
+            let photoCount = 0;
+            
             room.items?.forEach(item => {
               item.photos?.forEach(photo => {
-                allPhotos.push({ path: photo, reference: room.room_name, description: item.item_name });
+                photoCount++;
+                allPhotos.push({ 
+                  path: photo, 
+                  reference: room.room_name, 
+                  description: item.item_name,
+                  photoRef: `${roomCode}${roomIndex + 1}-${photoCount}`,
+                  date: inventory.property_overview.inspection_date
+                });
               });
             });
           });
@@ -466,7 +517,7 @@ const ReportPreview = () => {
           return (
             <div id="photo-vault-section" className="bg-white border-2 border-black p-8 shadow-lg mb-8">
               <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-black logo-font">Photo Vault</h2>
-              <p className="text-gray-600 mb-6">All photographic evidence from this inventory report, organized by room/section</p>
+              <p className="text-gray-600 mb-6">All photographic evidence from this inventory report with unique references and timestamps</p>
               
               <div className="space-y-8">
                 {Object.entries(groupedPhotos).map(([reference, photos]) => (
@@ -474,15 +525,20 @@ const ReportPreview = () => {
                     <h3 className="text-xl font-bold mb-4 text-black">{reference}</h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {photos.map((photo, index) => (
-                        <div key={index} className="border-2 border-gray-300 hover:border-black transition-all cursor-pointer">
+                        <div key={index} className="border-2 border-gray-300 hover:border-black transition-all cursor-pointer relative">
                           <img 
                             src={`${BACKEND_URL}${photo.path}`} 
                             alt={photo.description} 
                             className="w-full h-48 object-cover"
                           />
+                          {/* Date stamp overlay on photo */}
+                          <div className="absolute top-2 right-2 bg-black/75 text-white text-xs px-2 py-1 font-mono">
+                            {photo.date}
+                          </div>
                           <div className="p-2 bg-gray-50 border-t-2 border-gray-300">
+                            <p className="text-xs font-bold text-blue-600">{photo.photoRef}</p>
                             <p className="text-xs font-semibold truncate">{photo.description}</p>
-                            <p className="text-xs text-gray-500">Ref: {reference}</p>
+                            <p className="text-xs text-gray-500">{reference}</p>
                           </div>
                         </div>
                       ))}
