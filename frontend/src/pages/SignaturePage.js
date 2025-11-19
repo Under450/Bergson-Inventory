@@ -198,6 +198,9 @@ const SignaturePage = () => {
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
+                onTouchStart={startDrawing}
+                onTouchMove={draw}
+                onTouchEnd={stopDrawing}
                 data-testid="signature-canvas"
               />
               <Button
