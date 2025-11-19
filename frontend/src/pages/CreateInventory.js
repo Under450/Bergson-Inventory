@@ -711,53 +711,90 @@ const CreateInventory = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Compliance Documents</h3>
             
-            <div className="bg-blue-50 border-2 border-blue-600 p-4 mb-4">
+            <div className="bg-blue-50 border-2 border-blue-600 p-4 mb-6">
               <p className="text-sm text-blue-900 font-semibold mb-2">Pre-Arrival Documents</p>
               <p className="text-sm text-blue-800 mb-3">
-                The following prescribed information should be provided to tenants before move-in. Upload these documents and they will be accessible via a secure link in the report:
+                Upload required documents below. Each will become a clickable link in the final report.
               </p>
-              <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-                <li>Gas Safety Certificate</li>
-                <li>How to Rent Guide</li>
-                <li>EPC (Energy Performance Certificate)</li>
-                <li>Deposit Protection Information</li>
-                <li>Electrical Safety Certificate</li>
-              </ul>
-              <p className="text-xs text-blue-700 mt-3 italic">
-                Tenants will confirm receipt electronically and agree to receiving these documents via the secure report link.
+              <p className="text-xs text-blue-700 italic">
+                Tenants will confirm receipt electronically via the secure report link.
               </p>
             </div>
 
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              multiple
-              onChange={handleDocumentUpload}
-              className="hidden"
-              id="document-upload"
-            />
-            <Button
-              onClick={() => document.getElementById('document-upload').click()}
-              variant="outline"
-              className="border-2 border-black mb-4"
-              data-testid="upload-compliance-doc-btn"
-            >
-              <Upload className="w-5 h-5 mr-2" />
-              Upload Pre-Arrival Documents
-            </Button>
-            <div className="space-y-2">
-              {complianceDocs.map((doc, index) => (
-                <div key={index} className="flex items-center justify-between border-2 border-gray-300 p-3">
-                  <span className="text-sm">{doc.name}</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setComplianceDocs(complianceDocs.filter((_, i) => i !== index))}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-              ))}
+            {/* Individual Document Upload Sections */}
+            <div className="space-y-3">
+              {[
+                "Gas Safety Certificate",
+                "How to Rent Guide",
+                "EPC (Energy Performance Certificate)",
+                "Deposit Protection Information",
+                "Electrical Safety Certificate (EICR)"
+              ].map((docName) => {
+                const uploadedDoc = complianceDocs.find(doc => doc.type === docName);
+                return (
+                  <div key={docName} className="flex items-center justify-between border-2 border-gray-300 p-3 bg-gray-50">
+                    <span className="font-semibold text-sm flex-1">{docName}</span>
+                    {uploadedDoc ? (
+                      <div className="flex items-center space-x-2">
+                        <a
+                          href={`${process.env.REACT_APP_BACKEND_URL}${uploadedDoc.path}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 underline text-sm"
+                        >
+                          {uploadedDoc.name}
+                        </a>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setComplianceDocs(complianceDocs.filter(d => d.type !== docName))}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={async (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const formData = new FormData();
+                              formData.append("file", file);
+                              try {
+                                const response = await axios.post(`${API}/upload/document`, formData, {
+                                  headers: {'Content-Type': 'multipart/form-data'},
+                                });
+                                setComplianceDocs(prev => [...prev, { 
+                                  path: response.data.file_path, 
+                                  name: response.data.original_filename,
+                                  type: docName
+                                }]);
+                                toast.success(`${docName} uploaded`);
+                              } catch (error) {
+                                toast.error("Failed to upload document");
+                              }
+                            }
+                            e.target.value = null;
+                          }}
+                          className="hidden"
+                          id={`doc-upload-${docName.replace(/\s+/g, '-')}`}
+                        />
+                        <Button
+                          onClick={() => document.getElementById(`doc-upload-${docName.replace(/\s+/g, '-')}`).click()}
+                          variant="outline"
+                          size="sm"
+                          className="border-2 border-black"
+                        >
+                          <Upload className="w-4 h-4 mr-2" />
+                          Upload
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
