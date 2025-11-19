@@ -454,6 +454,87 @@ const ReportPreview = () => {
             </div>
           );
         })()}
+
+        {/* Disclaimer Section */}
+        <div className="bg-amber-50 border-4 border-amber-600 p-8 shadow-lg mb-8">
+          <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-amber-900 logo-font">Disclaimer</h2>
+          
+          <div className="space-y-4 text-gray-800">
+            <p className="leading-relaxed">
+              The term 'Inspector' is used hereafter to define the Inventory Hive software user that is responsible for completing this property report. It is the duty and ultimate responsibility of the Inspector and Tenant to agree upon the accuracy of this report.
+            </p>
+
+            <p className="leading-relaxed">
+              This report has been prepared by an inspector who is not an expert in buildings, furnishings, decorations, woods, antiques or a qualified surveyor.
+            </p>
+
+            <p className="leading-relaxed">
+              This report relates only to the furniture and all the landlord's equipment and contents in the property. It is no guarantee, or report on, the adequacy of, or safety of, any such equipment or contents, merely a record that such items exist in the property at the date of preparing the report and the superficial condition of same.
+            </p>
+
+            <p className="leading-relaxed">
+              The inspector will not take water readings unless the meter is clearly visible within the property or attached to an exterior wall at low accessible level.
+            </p>
+
+            <p className="leading-relaxed">
+              Windows throughout the property have not been tested for function or operation. Descriptions are purely based on the superficial appearance of windows, frames and locks. The inspector can accept no liability arising from any failure of the windows or parts thereof to function properly at all.
+            </p>
+
+            <p className="leading-relaxed">
+              Inspectors do not check gas or electrical appliances and give no guarantee with regard to the safety or reliability of such items. It should be noted that inspectors are not required to inspect smoke or carbon monoxide alarms, testing such alarm 'test functions' may occur. However, this is no guarantee, or report on, the adequacy of these alarms. It is merely a record that batteries were present (if tested) upon completion of this report.
+            </p>
+
+            <p className="leading-relaxed">
+              The inspector cannot undertake to move heavy items of furniture or to make searches in inaccessible locations such as loft spaces, cellars, locked rooms and high level cupboards, or to unpack items. Inspectors reserve the right not to handle or move items deemed to be fragile or valuable. In addition, the inspectors reserve the right not to handle items that may be of a health hazard and to generalise/summarise on such items deemed to be unsuitable for further inspection.
+            </p>
+
+            <h3 className="text-xl font-bold mt-6 mb-3 text-amber-900">Furniture and furnishings (Fire) Safety Regulations 1988 – (1993)</h3>
+            <p className="leading-relaxed">
+              The fire and safety regulation regarding furnishings, gas, electrical and similar services are ultimately the responsibility of the instructing principle. Where the report notes "Fire Label Present", this should not be interpreted to mean the item complies with the "furniture and furnishings (fire) (safety) (amendments) 1993". It is a record that the item had a label as described or similar to that detailed in the "guide" published by the Department of Trade and Industry January 1997 (or subsequent date). It is not a statement that the item can be considered to comply with the regulations.
+            </p>
+
+            <h3 className="text-xl font-bold mt-6 mb-3 text-amber-900">Safety Certificate and Legislation Compliance</h3>
+            <p className="leading-relaxed">
+              The safety certificate and legislation compliance checklists in this report are no guarantee, or report on, the adequacy of, or safety of, any such liability contents, merely a record that such steps have been offered by the Inventory Hive software to highlight issues that may exist at the property at the date of preparing this report. Inventory Hive accepts no responsibility for the contents of these steps. It is the responsibility of the Inspector and Tenant to agree upon the accuracy of these steps.
+            </p>
+          </div>
+        </div>
+
+        {/* Guidance Notes to Tenants */}
+        <div className="bg-blue-50 border-4 border-blue-600 p-8 shadow-lg mb-8">
+          <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-blue-900 logo-font">Guidance Notes to Tenants</h2>
+          
+          <div className="space-y-6 text-gray-800">
+            <div>
+              <h3 className="text-xl font-bold mb-3 text-blue-900">What should I know about the check-out process?</h3>
+              <p className="leading-relaxed mb-3">
+                At the beginning of the tenancy it is important to note any specific discrepancies on the report that you do not agree with i.e marks on walls, carpets, etc. If no such additional notes are made via the electronic process at the start of the tenancy, the report will be deemed as accepted as read.
+              </p>
+              <p className="leading-relaxed mb-3">
+                The condition of the property at the start of the tenancy, as described in the report will be compared to the condition of the property at the end of tenancy. Details of any alterations to the property after the report has been agreed upon will be recorded by an inspector (Inventory Hive user).
+              </p>
+              <p className="leading-relaxed mb-3">
+                A 'Check-Out' report will be conducted to determine any changes to the report. The tenant should gain permission from the managing agent/landlord if they wish to remove or store any items during the tenancy and this should be confirmed in writing by the managing agent/landlord.
+              </p>
+              <p className="leading-relaxed">
+                The inspector cannot undertake to move heavy items of furniture or to make searches in inaccessible locations such as loft spaces, cellars, locked rooms and high level cupboards, or to unpack items. Inspectors reserve the right not to handle or move items deemed to be fragile or valuable. In addition, the inspector reserves the right not to handle items that may be of a health hazard and to generalise/summarise on such items deemed to be unsuitable for further inspection.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-3 text-blue-900">What should I know before the check-out report is created?</h3>
+              <p className="leading-relaxed mb-3">
+                All items should be returned to their original position (as detailed on the report); this includes stored or boxed items not used during the tenancy. Any items listed as 'Item Missing' can often result in a replacement cost or a charge being made. Managing agents/landlords may also charge for the removal of unapproved items left by a tenant at the end of the tenancy that were not included in the original report.
+              </p>
+              <p className="leading-relaxed mb-3">
+                At the time of the property 'Check-Out' all personal items (including consumable items) should have been removed and cleaning of the property completed. Generally, no further cleaning is permitted once the 'Check-Out' inspection has commenced. Tenants should be advised of the date and time of the 'Check-Out' and provide access, or let the appointed inspector know the details of their departure of the property. Additional costs are sometimes charged by managing agents/landlords if the inspector is not able to complete the 'Check-Out' inspection due to the tenant not being ready to vacate or if they are delayed.
+              </p>
+              <p className="leading-relaxed font-semibold">
+                The 'Check-Out' report is advisory and is based on information available to the inspector at the time of the 'Check-Out'. It must not be treated as a final statement of tenant responsibility. It remains the responsibility of the agent/landlord and tenant to fully agree any issues and/or deductions (if any) from the deposit.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
