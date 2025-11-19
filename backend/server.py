@@ -56,10 +56,19 @@ class SafetyItem(BaseModel):
     count: int = 1
     photo: Optional[str] = None
 
+class AlarmComplianceChecks(BaseModel):
+    smoke_alarms_all_floors: Optional[bool] = None
+    smoke_alarms_test_buttons: Optional[bool] = None
+    smoke_alarms_missing_areas: Optional[bool] = None
+    co_alarms_present: Optional[bool] = None
+    co_alarms_test_buttons: Optional[bool] = None
+    co_alarms_missing_areas: Optional[bool] = None
+
 class HealthSafety(BaseModel):
     meters: List[MeterInfo] = []
     safety_items: List[SafetyItem] = []
     compliance_documents: List[str] = []  # File paths to uploaded docs
+    alarm_compliance_checks: Optional[AlarmComplianceChecks] = None
 
 class ItemCondition(BaseModel):
     item_name: str  # e.g., "Walls", "Carpet", "Window"
