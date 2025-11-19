@@ -356,40 +356,79 @@ const ReportPreview = () => {
         {/* Room-by-Room Inventory */}
         {inventory.rooms.filter(room => room.items.length > 0 || room.general_notes !== "").map((room, roomIndex) => (
           <div key={roomIndex} className="bg-white border-2 border-black p-8 mb-8 shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 pb-3 border-b-2 border-gray-400 logo-font">{room.room_name}</h2>
+            <h2 className="text-2xl font-bold mb-4 pb-3 border-b-2 border-gray-400 logo-font">{roomIndex + 1}. {room.room_name}</h2>
             
             {room.general_notes && (
               <div className="mb-6 bg-gray-50 p-4 border-l-4 border-black">
-                <p className="text-gray-700">{room.general_notes}</p>
+                <p className="text-gray-700 text-sm italic">{room.general_notes}</p>
               </div>
             )}
 
-            {room.items.map((item, itemIndex) => (
-              <div key={itemIndex} className="mb-6 pb-6 border-b border-gray-300 last:border-b-0">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold">{item.item_name}</h3>
-                    <div className="mt-1">
-                      <span className={`px-3 py-1 text-sm font-semibold ${
-                        item.condition === 'Excellent' ? 'bg-green-100 text-green-800' :
-                        item.condition === 'Good' ? 'bg-blue-100 text-blue-800' :
-                        item.condition === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
-                        item.condition === 'Poor' ? 'bg-orange-100 text-orange-800' :
-                        'bg-red-100 text-red-800'
+            {/* Table Format like InventoryHive */}
+            <table className="w-full border-collapse border-2 border-gray-400">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border-2 border-gray-400 p-3 text-left font-bold">Item</th>
+                  <th className="border-2 border-gray-400 p-3 text-left font-bold">Description</th>
+                  <th className="border-2 border-gray-400 p-3 text-center font-bold w-32">Condition</th>
+                  <th className="border-2 border-gray-400 p-3 text-center font-bold w-32">Cleanliness</th>
+                  <th className="border-2 border-gray-400 p-3 text-center font-bold w-32">Photos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {room.items.map((item, itemIndex) => (
+                  <tr key={itemIndex} className="hover:bg-gray-50">
+                    <td className="border-2 border-gray-400 p-3 align-top">
+                      <div className="font-semibold">{roomIndex + 1}.{itemIndex + 1}</div>
+                      <div className="font-bold">{item.item_name}</div>
+                    </td>
+                    <td className="border-2 border-gray-400 p-3 align-top">
+                      <div className="text-sm">
+                        <div className="mb-2">
+                          <span className="font-semibold">Condition:</span> {item.description || 'As photographed'}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-2">
+                          <strong>Reference:</strong> {room.room_name} - {item.item_name} | <strong>Date:</strong> {inventory.property_overview.inspection_date}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="border-2 border-gray-400 p-3 align-top text-center">
+                      <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${
+                        item.condition === 'Excellent' ? 'bg-green-500 text-white' :
+                        item.condition === 'Good' ? 'bg-green-500 text-white' :
+                        item.condition === 'Fair' ? 'bg-orange-500 text-white' :
+                        item.condition === 'Poor' ? 'bg-orange-500 text-white' :
+                        'bg-red-500 text-white'
                       }`}>
-                        {item.condition}
+                        ● {item.condition}
                       </span>
-                    </div>
-                    {item.description && (
-                      <p className="mt-3 text-gray-700"><strong>Description:</strong> {item.description}</p>
-                    )}
-                    <p className="mt-2 text-sm text-gray-500">
-                      <strong>Reference:</strong> {room.room_name} - {item.item_name} | <strong>Inspection Date:</strong> {inventory.property_overview.inspection_date}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+                    </td>
+                    <td className="border-2 border-gray-400 p-3 align-top text-center">
+                      <span className="inline-block px-3 py-1 text-xs font-bold rounded-full bg-green-500 text-white">
+                        ● Good
+                      </span>
+                    </td>
+                    <td className="border-2 border-gray-400 p-3 align-top text-center">
+                      {item.photos && item.photos.length > 0 ? (
+                        <button
+                          onClick={() => {
+                            const photoVault = document.getElementById('photo-vault-section');
+                            if (photoVault) {
+                              photoVault.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          }}
+                          className="text-blue-600 hover:text-blue-800 font-semibold text-sm underline"
+                        >
+                          📷 {item.photos.length} photo{item.photos.length > 1 ? 's' : ''}
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ))}
 
