@@ -942,9 +942,13 @@ const CreateInventory = () => {
                                   <SelectItem value="Fire extinguisher">Fire extinguisher</SelectItem>
                                   <SelectItem value="Thermostat">Thermostat</SelectItem>
                                   <SelectItem value="Bath">Bath</SelectItem>
+                                  <SelectItem value="Taps (bath)">Taps (bath)</SelectItem>
                                   <SelectItem value="Shower">Shower</SelectItem>
+                                  <SelectItem value="Shower screen">Shower screen</SelectItem>
+                                  <SelectItem value="Shower tray">Shower tray</SelectItem>
                                   <SelectItem value="Toilet">Toilet</SelectItem>
                                   <SelectItem value="Wash Basin">Wash Basin</SelectItem>
+                                  <SelectItem value="Taps (basin)">Taps (basin)</SelectItem>
                                   <SelectItem value="Floor tiles">Floor tiles</SelectItem>
                                   <SelectItem value="Carpet">Carpet</SelectItem>
                                   <SelectItem value="Laminate flooring">Laminate flooring</SelectItem>
