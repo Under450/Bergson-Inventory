@@ -464,7 +464,7 @@ const ReportPreview = () => {
           }, {});
           
           return (
-            <div className="bg-white border-2 border-black p-8 shadow-lg mb-8">
+            <div id="photo-vault-section" className="bg-white border-2 border-black p-8 shadow-lg mb-8">
               <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-black logo-font">Photo Vault</h2>
               <p className="text-gray-600 mb-6">All photographic evidence from this inventory report, organized by room/section</p>
               
