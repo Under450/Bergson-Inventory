@@ -914,7 +914,7 @@ const CreateInventory = () => {
                                   <SelectItem value="Cupboard doors">Cupboard doors</SelectItem>
                                   <SelectItem value="Cabinet handles/hinges">Cabinet handles/hinges</SelectItem>
                                   <SelectItem value="Sink">Sink</SelectItem>
-                                  <SelectItem value="Taps">Taps</SelectItem>
+                                  <SelectItem value="Taps (sink)">Taps (sink)</SelectItem>
                                   <SelectItem value="Plug/strainer">Plug/strainer</SelectItem>
                                   <SelectItem value="Waste disposal unit">Waste disposal unit</SelectItem>
                                   <SelectItem value="Pipework visible">Pipework visible</SelectItem>
