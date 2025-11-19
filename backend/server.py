@@ -275,20 +275,35 @@ async def submit_signature(token: str, signature_data: SignatureSubmit):
     if not inventory:
         raise HTTPException(status_code=404, detail="Invalid link")
     
-    if inventory.get("signature") and inventory["signature"].get("is_locked"):
-        raise HTTPException(status_code=403, detail="Document already signed")
+    # Get existing signature or create new one
+    existing_signature = inventory.get("signature", {})
+    if existing_signature.get("is_locked"):
+        raise HTTPException(status_code=403, detail="Document already locked")
     
-    signature = Signature(
-        tenant_name=signature_data.tenant_name,
+    # Create new signature entry
+    new_entry = SignatureEntry(
+        signer_name=signature_data.signer_name,
+        signer_role=signature_data.signer_role,
         signature_data=signature_data.signature_data,
         signed_at=datetime.now(timezone.utc).isoformat(),
         ip_address=signature_data.ip_address,
-        is_locked=True
+        email=signature_data.email
     )
+    
+    # Add to signatures list
+    signatures_list = existing_signature.get("signatures", [])
+    signatures_list.append(new_entry.model_dump())
+    
+    # Update signature object
+    signature = {
+        "signatures": signatures_list,
+        "tenant_present_during_inspection": signature_data.tenant_present if signature_data.tenant_present is not None else existing_signature.get("tenant_present_during_inspection"),
+        "is_locked": False  # Will be locked when all required signatures are collected
+    }
     
     await db.inventories.update_one(
         {"shareable_link": token},
-        {"$set": {"signature": signature.model_dump(), "status": "signed"}}
+        {"$set": {"signature": signature, "status": "signed"}}
     )
     
     return {"message": "Signature submitted successfully", "verification_link": f"/verify/{token}"}
