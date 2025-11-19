@@ -213,7 +213,8 @@ const CreateInventory = () => {
       health_safety: {
         meters,
         safety_items: safetyItems,
-        compliance_documents: complianceDocs.map(doc => doc.path)
+        compliance_documents: complianceDocs.map(doc => doc.path),
+        alarm_compliance_checks: alarmChecks
       },
       rooms: rooms.filter(room => room.items.length > 0 || room.general_notes !== "")
     };
