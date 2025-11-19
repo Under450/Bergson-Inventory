@@ -710,6 +710,24 @@ const CreateInventory = () => {
           {/* Compliance Documents */}
           <div>
             <h3 className="text-xl font-bold mb-4">Compliance Documents</h3>
+            
+            <div className="bg-blue-50 border-2 border-blue-600 p-4 mb-4">
+              <p className="text-sm text-blue-900 font-semibold mb-2">Pre-Arrival Documents</p>
+              <p className="text-sm text-blue-800 mb-3">
+                The following prescribed information should be provided to tenants before move-in. Upload these documents and they will be accessible via a secure link in the report:
+              </p>
+              <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+                <li>Gas Safety Certificate</li>
+                <li>How to Rent Guide</li>
+                <li>EPC (Energy Performance Certificate)</li>
+                <li>Deposit Protection Information</li>
+                <li>Electrical Safety Certificate</li>
+              </ul>
+              <p className="text-xs text-blue-700 mt-3 italic">
+                Tenants will confirm receipt electronically and agree to receiving these documents via the secure report link.
+              </p>
+            </div>
+
             <input
               type="file"
               accept=".pdf,.doc,.docx"
@@ -725,7 +743,7 @@ const CreateInventory = () => {
               data-testid="upload-compliance-doc-btn"
             >
               <Upload className="w-5 h-5 mr-2" />
-              Upload Documents
+              Upload Pre-Arrival Documents
             </Button>
             <div className="space-y-2">
               {complianceDocs.map((doc, index) => (
