@@ -225,6 +225,57 @@ const ReportPreview = () => {
           )}
         </div>
 
+        {/* Glossary of Terms */}
+        <div className="bg-white border-2 border-black p-8 shadow-lg mb-8">
+          <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-black logo-font">Glossary of Terms</h2>
+          <p className="text-gray-700 mb-6">
+            For guidance, please find a glossary of terms used within this report:
+          </p>
+          
+          <div className="space-y-4">
+            <div className="flex items-start space-x-4 p-4 border-l-4 border-green-600 bg-green-50">
+              <span className="px-3 py-1 text-sm font-semibold bg-green-100 text-green-800">Excellent</span>
+              <p className="text-gray-700 flex-1">
+                Item is in pristine condition, as new or recently refurbished. No wear, marks, or damage visible.
+              </p>
+            </div>
+
+            <div className="flex items-start space-x-4 p-4 border-l-4 border-blue-600 bg-blue-50">
+              <span className="px-3 py-1 text-sm font-semibold bg-blue-100 text-blue-800">Good</span>
+              <p className="text-gray-700 flex-1">
+                Item is in good working order with minor signs of wear consistent with normal use. Fully functional and well-maintained.
+              </p>
+            </div>
+
+            <div className="flex items-start space-x-4 p-4 border-l-4 border-yellow-600 bg-yellow-50">
+              <span className="px-3 py-1 text-sm font-semibold bg-yellow-100 text-yellow-800">Fair</span>
+              <p className="text-gray-700 flex-1">
+                Item shows moderate wear and tear. May have minor marks, scuffs, or fading but remains functional and acceptable.
+              </p>
+            </div>
+
+            <div className="flex items-start space-x-4 p-4 border-l-4 border-orange-600 bg-orange-50">
+              <span className="px-3 py-1 text-sm font-semibold bg-orange-100 text-orange-800">Poor</span>
+              <p className="text-gray-700 flex-1">
+                Item shows significant wear with visible marks, stains, or damage. May require attention or replacement soon.
+              </p>
+            </div>
+
+            <div className="flex items-start space-x-4 p-4 border-l-4 border-red-600 bg-red-50">
+              <span className="px-3 py-1 text-sm font-semibold bg-red-100 text-red-800">Damaged</span>
+              <p className="text-gray-700 flex-1">
+                Item is broken, non-functional, or severely damaged. Requires immediate repair or replacement.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-gray-50 border-2 border-gray-300">
+            <p className="text-sm text-gray-600">
+              <strong>Note:</strong> All condition assessments are made at the time of inspection and documented with photographic evidence where applicable.
+            </p>
+          </div>
+        </div>
+
         {/* Health & Safety */}
         {(inventory.health_safety.meters.length > 0 || inventory.health_safety.safety_items.length > 0) && (
           <div className="bg-white border-2 border-black p-8 mb-8 shadow-lg">
