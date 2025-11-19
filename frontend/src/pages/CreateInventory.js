@@ -127,6 +127,26 @@ const CreateInventory = () => {
     setSafetyItems(updated);
   };
 
+  const handleSafetyItemPhotoUpload = async (index, file) => {
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("room_reference", "Health & Safety");
+    formData.append("description", safetyItems[index].item_type);
+    
+    try {
+      const response = await axios.post(`${API}/upload/photo`, formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+      updateSafetyItem(index, "photo", response.data.file_path);
+      toast.success("Safety item photo uploaded");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload photo");
+    }
+  };
+
   const handleDocumentUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
