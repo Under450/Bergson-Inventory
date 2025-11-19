@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Property Photo Upload</title>
+</head>
+<body>
+    <h1>Test Property Photo Upload</h1>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+    <button onclick="uploadFiles()">Upload</button>
+    <div id="result"></div>
+    <div id="images"></div>
+    
+    <script>
+        const BACKEND_URL = "https://inventory-app-68.preview.emergentagent.com";
+        const API = BACKEND_URL + "/api";
+        
+        async function uploadFiles() {
+            const files = document.getElementById('fileInput').files;
+            const resultDiv = document.getElementById('result');
+            const imagesDiv = document.getElementById('images');
+            
+            resultDiv.innerHTML = 'Uploading...';
+            
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    const response = await fetch(API + '/upload/property-photo', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    resultDiv.innerHTML += '<p>Success: ' + data.file_path + '</p>';
+                    
+                    // Display the uploaded image
+                    const img = document.createElement('img');
+                    img.src = BACKEND_URL + data.file_path;
+                    img.width = 200;
+                    imagesDiv.appendChild(img);
+                } catch (error) {
+                    resultDiv.innerHTML += '<p>Error: ' + error.message + '</p>';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
