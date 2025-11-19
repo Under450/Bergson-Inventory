@@ -196,10 +196,14 @@ async def upload_photo(file: UploadFile = File(...), room_reference: str = Form(
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
+    # Get current timestamp
+    timestamp = datetime.now(timezone.utc)
+    
     photo_metadata = {
         "file_path": f"/uploads/photos/{unique_filename}",
         "room_reference": room_reference,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": timestamp.isoformat(),
+        "date_taken": timestamp.strftime("%d/%m/%Y %H:%M"),
         "description": description,
         "original_filename": file.filename
     }
