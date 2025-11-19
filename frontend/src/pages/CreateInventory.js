@@ -88,17 +88,24 @@ const CreateInventory = () => {
   };
 
   const handleMeterPhotoUpload = async (index, file) => {
+    if (!file) return;
+    
     const formData = new FormData();
     formData.append("file", file);
     formData.append("room_reference", "Meters");
     formData.append("description", `${meters[index].meter_type} Meter`);
     
     try {
-      const response = await axios.post(`${API}/upload/photo`, formData);
+      const response = await axios.post(`${API}/upload/photo`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       updateMeter(index, "photo", response.data.file_path);
       toast.success("Meter photo uploaded");
     } catch (error) {
-      toast.error("Failed to upload meter photo");
+      console.error("Upload error:", error);
+      toast.error("Failed to upload meter photo: " + (error.response?.data?.detail || error.message));
     }
   };
 
