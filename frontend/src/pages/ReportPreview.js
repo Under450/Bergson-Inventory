@@ -392,6 +392,68 @@ const ReportPreview = () => {
             ))}
           </div>
         ))}
+
+        {/* Photo Vault */}
+        {(() => {
+          const allPhotos = [];
+          
+          // Collect all photos from all sources
+          inventory.property_overview.property_photos?.forEach(photo => {
+            allPhotos.push({ path: photo, reference: "Property Overview", description: "Property Photo" });
+          });
+          
+          inventory.health_safety?.meters?.forEach(meter => {
+            if (meter.photo) {
+              allPhotos.push({ path: meter.photo, reference: "Health & Safety", description: `${meter.meter_type} Meter - ${meter.location}` });
+            }
+          });
+          
+          inventory.rooms?.forEach(room => {
+            room.items?.forEach(item => {
+              item.photos?.forEach(photo => {
+                allPhotos.push({ path: photo, reference: room.room_name, description: item.item_name });
+              });
+            });
+          });
+          
+          if (allPhotos.length === 0) return null;
+          
+          const groupedPhotos = allPhotos.reduce((acc, photo) => {
+            if (!acc[photo.reference]) acc[photo.reference] = [];
+            acc[photo.reference].push(photo);
+            return acc;
+          }, {});
+          
+          return (
+            <div className="bg-white border-2 border-black p-8 shadow-lg mb-8">
+              <h2 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-black logo-font">Photo Vault</h2>
+              <p className="text-gray-600 mb-6">All photographic evidence from this inventory report, organized by room/section</p>
+              
+              <div className="space-y-8">
+                {Object.entries(groupedPhotos).map(([reference, photos]) => (
+                  <div key={reference}>
+                    <h3 className="text-xl font-bold mb-4 text-black">{reference}</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {photos.map((photo, index) => (
+                        <div key={index} className="border-2 border-gray-300 hover:border-black transition-all cursor-pointer">
+                          <img 
+                            src={`${BACKEND_URL}${photo.path}`} 
+                            alt={photo.description} 
+                            className="w-full h-48 object-cover"
+                          />
+                          <div className="p-2 bg-gray-50 border-t-2 border-gray-300">
+                            <p className="text-xs font-semibold truncate">{photo.description}</p>
+                            <p className="text-xs text-gray-500">Ref: {reference}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
