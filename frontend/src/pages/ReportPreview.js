@@ -225,9 +225,82 @@ const ReportPreview = () => {
           )}
         </div>
 
-        <div className="text-center mt-8">
-          <p className="text-gray-600">Complete report preview with all sections...</p>
-        </div>
+        {/* Health & Safety */}
+        {(inventory.health_safety.meters.length > 0 || inventory.health_safety.safety_items.length > 0) && (
+          <div className="bg-white border-2 border-black p-8 mb-8 shadow-lg">
+            <h2 className="text-3xl font-bold mb-4 pb-3 border-b-2 border-black logo-font">Health & Safety</h2>
+            
+            {inventory.health_safety.meters.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-bold text-xl mb-4">Utility Meters</h3>
+                {inventory.health_safety.meters.map((meter, index) => (
+                  <div key={index} className="border-2 border-gray-300 p-4 mb-4">
+                    <div className="grid grid-cols-3 gap-4">
+                      <div><span className="font-semibold">Type:</span> {meter.meter_type}</div>
+                      <div><span className="font-semibold">Serial:</span> {meter.serial_number}</div>
+                      <div><span className="font-semibold">Location:</span> {meter.location}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {inventory.health_safety.safety_items.length > 0 && (
+              <div>
+                <h3 className="font-bold text-xl mb-4">Safety Equipment</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {inventory.health_safety.safety_items.map((item, index) => (
+                    <div key={index} className="border-2 border-gray-300 p-3">
+                      <div className="font-semibold">{item.item_type.replace('_', ' ').toUpperCase()}</div>
+                      <div className="text-sm text-gray-600">Location: {item.location}</div>
+                      <div className="text-sm text-gray-600">Count: {item.count}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Room-by-Room Inventory */}
+        {inventory.rooms.filter(room => room.items.length > 0 || room.general_notes !== "").map((room, roomIndex) => (
+          <div key={roomIndex} className="bg-white border-2 border-black p-8 mb-8 shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 pb-3 border-b-2 border-gray-400 logo-font">{room.room_name}</h2>
+            
+            {room.general_notes && (
+              <div className="mb-6 bg-gray-50 p-4 border-l-4 border-black">
+                <p className="text-gray-700">{room.general_notes}</p>
+              </div>
+            )}
+
+            {room.items.map((item, itemIndex) => (
+              <div key={itemIndex} className="mb-6 pb-6 border-b border-gray-300 last:border-b-0">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold">{item.item_name}</h3>
+                    <div className="mt-1">
+                      <span className={`px-3 py-1 text-sm font-semibold ${
+                        item.condition === 'Excellent' ? 'bg-green-100 text-green-800' :
+                        item.condition === 'Good' ? 'bg-blue-100 text-blue-800' :
+                        item.condition === 'Fair' ? 'bg-yellow-100 text-yellow-800' :
+                        item.condition === 'Poor' ? 'bg-orange-100 text-orange-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {item.condition}
+                      </span>
+                    </div>
+                    {item.description && (
+                      <p className="mt-3 text-gray-700"><strong>Description:</strong> {item.description}</p>
+                    )}
+                    <p className="mt-2 text-sm text-gray-500">
+                      <strong>Reference:</strong> {room.room_name} - {item.item_name} | <strong>Inspection Date:</strong> {inventory.property_overview.inspection_date}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
