@@ -845,12 +845,79 @@ const CreateInventory = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                               <Label>Item Name</Label>
-                              <Input
+                              <Select
                                 value={item.item_name}
-                                onChange={(e) => updateRoomItem(roomIndex, itemIndex, "item_name", e.target.value)}
-                                placeholder="e.g., Walls, Carpet, Window"
-                                className="border-2 border-gray-300"
-                              />
+                                onValueChange={(value) => updateRoomItem(roomIndex, itemIndex, "item_name", value)}
+                              >
+                                <SelectTrigger className="border-2 border-gray-300">
+                                  <SelectValue placeholder="Select item..." />
+                                </SelectTrigger>
+                                <SelectContent className="max-h-96 overflow-y-auto">
+                                  <SelectItem value="General Overview">General Overview</SelectItem>
+                                  <SelectItem value="Ceiling">Ceiling</SelectItem>
+                                  <SelectItem value="Walls">Walls</SelectItem>
+                                  <SelectItem value="Flooring">Flooring</SelectItem>
+                                  <SelectItem value="Skirting boards">Skirting boards</SelectItem>
+                                  <SelectItem value="Internal doors">Internal doors</SelectItem>
+                                  <SelectItem value="Door handles">Door handles</SelectItem>
+                                  <SelectItem value="Architrave">Architrave</SelectItem>
+                                  <SelectItem value="Light fittings">Light fittings</SelectItem>
+                                  <SelectItem value="Light switches">Light switches</SelectItem>
+                                  <SelectItem value="Sockets">Sockets</SelectItem>
+                                  <SelectItem value="Radiator">Radiator</SelectItem>
+                                  <SelectItem value="Window(s)">Window(s)</SelectItem>
+                                  <SelectItem value="Window handles">Window handles</SelectItem>
+                                  <SelectItem value="Window locks">Window locks</SelectItem>
+                                  <SelectItem value="Window blinds/curtains">Window blinds/curtains</SelectItem>
+                                  <SelectItem value="Worktops">Worktops</SelectItem>
+                                  <SelectItem value="Splashbacks">Splashbacks</SelectItem>
+                                  <SelectItem value="Wall tiles">Wall tiles</SelectItem>
+                                  <SelectItem value="Paintwork">Paintwork</SelectItem>
+                                  <SelectItem value="Sealant">Sealant (sink, worktop edges, tiles)</SelectItem>
+                                  <SelectItem value="Kitchen cabinets (upper)">Kitchen cabinets (upper)</SelectItem>
+                                  <SelectItem value="Kitchen cabinets (lower)">Kitchen cabinets (lower)</SelectItem>
+                                  <SelectItem value="Cabinet interiors">Cabinet interiors</SelectItem>
+                                  <SelectItem value="Drawers">Drawers</SelectItem>
+                                  <SelectItem value="Cupboard doors">Cupboard doors</SelectItem>
+                                  <SelectItem value="Cabinet handles/hinges">Cabinet handles/hinges</SelectItem>
+                                  <SelectItem value="Sink">Sink</SelectItem>
+                                  <SelectItem value="Taps">Taps</SelectItem>
+                                  <SelectItem value="Plug/strainer">Plug/strainer</SelectItem>
+                                  <SelectItem value="Waste disposal unit">Waste disposal unit</SelectItem>
+                                  <SelectItem value="Pipework visible">Pipework visible</SelectItem>
+                                  <SelectItem value="Stop tap">Stop tap</SelectItem>
+                                  <SelectItem value="Oven">Oven</SelectItem>
+                                  <SelectItem value="Grill">Grill</SelectItem>
+                                  <SelectItem value="Hob">Hob</SelectItem>
+                                  <SelectItem value="Extractor hood">Extractor hood</SelectItem>
+                                  <SelectItem value="Microwave">Microwave</SelectItem>
+                                  <SelectItem value="Dishwasher">Dishwasher</SelectItem>
+                                  <SelectItem value="Washing machine">Washing machine</SelectItem>
+                                  <SelectItem value="Tumble dryer">Tumble dryer</SelectItem>
+                                  <SelectItem value="Washer/dryer combo">Washer/dryer combo</SelectItem>
+                                  <SelectItem value="Fridge">Fridge</SelectItem>
+                                  <SelectItem value="Freezer">Freezer</SelectItem>
+                                  <SelectItem value="Fridge-freezer">Fridge-freezer</SelectItem>
+                                  <SelectItem value="Boiler">Boiler</SelectItem>
+                                  <SelectItem value="Kettle">Kettle</SelectItem>
+                                  <SelectItem value="Toaster">Toaster</SelectItem>
+                                  <SelectItem value="Coffee machine">Coffee machine</SelectItem>
+                                  <SelectItem value="Smoke alarm">Smoke alarm</SelectItem>
+                                  <SelectItem value="Heat alarm">Heat alarm</SelectItem>
+                                  <SelectItem value="Carbon monoxide alarm">Carbon monoxide alarm</SelectItem>
+                                  <SelectItem value="Fire blanket">Fire blanket</SelectItem>
+                                  <SelectItem value="Fire extinguisher">Fire extinguisher</SelectItem>
+                                  <SelectItem value="Thermostat">Thermostat</SelectItem>
+                                  <SelectItem value="Bath">Bath</SelectItem>
+                                  <SelectItem value="Shower">Shower</SelectItem>
+                                  <SelectItem value="Toilet">Toilet</SelectItem>
+                                  <SelectItem value="Wash Basin">Wash Basin</SelectItem>
+                                  <SelectItem value="Floor tiles">Floor tiles</SelectItem>
+                                  <SelectItem value="Carpet">Carpet</SelectItem>
+                                  <SelectItem value="Laminate flooring">Laminate flooring</SelectItem>
+                                  <SelectItem value="Built-in Wardrobes">Built-in Wardrobes</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </div>
                             <div>
                               <Label>Condition</Label>
