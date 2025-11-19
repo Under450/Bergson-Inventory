@@ -297,7 +297,7 @@ const ReportPreview = () => {
             )}
 
             {inventory.health_safety.safety_items.length > 0 && (
-              <div>
+              <div className="mb-6">
                 <h3 className="font-bold text-xl mb-4">Safety Equipment</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {inventory.health_safety.safety_items.map((item, index) => (
@@ -307,6 +307,46 @@ const ReportPreview = () => {
                       <div className="text-sm text-gray-600">Count: {item.count}</div>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Compliance Documents */}
+            {inventory.health_safety.compliance_documents?.length > 0 && (
+              <div>
+                <h3 className="font-bold text-xl mb-4">Pre-Arrival Compliance Documents</h3>
+                
+                <div className="bg-blue-50 border-2 border-blue-600 p-4 mb-4">
+                  <p className="text-sm text-blue-900 font-semibold mb-2">Tenant Confirmation Required</p>
+                  <p className="text-sm text-blue-800">
+                    I can confirm safe receipt of this property report and agree to receiving the following pre-arrival safety certificates/documents electronically, which I am successfully able to access via the links below:
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  {inventory.health_safety.compliance_documents.map((doc, index) => (
+                    <div key={index} className="flex items-center justify-between border-2 border-gray-300 p-3">
+                      <div className="flex items-center">
+                        <FileText className="w-5 h-5 mr-3 text-blue-600" />
+                        <span>Document {index + 1}</span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => window.open(`${BACKEND_URL}${doc}`, '_blank')}
+                        data-testid={`view-document-${index}`}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View/Download
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 p-3 bg-gray-50 border-2 border-gray-300">
+                  <p className="text-xs text-gray-600">
+                    By signing this report, you confirm receipt of all pre-arrival documents including: Gas Safety Certificate, How to Rent Guide, EPC, Deposit Protection Information, and Electrical Safety Certificate.
+                  </p>
                 </div>
               </div>
             )}
