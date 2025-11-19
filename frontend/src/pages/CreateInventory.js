@@ -585,6 +585,18 @@ const CreateInventory = () => {
                     />
                   </div>
                 </div>
+                <div className="mt-4">
+                  <Label>Photo</Label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleSafetyItemPhotoUpload(index, e.target.files[0])}
+                    className="block w-full text-sm"
+                  />
+                  {item.photo && (
+                    <img src={`${BACKEND_URL}${item.photo}`} alt="Safety Item" className="mt-2 w-32 h-32 object-cover border-2" />
+                  )}
+                </div>
               </div>
             ))}
           </div>
