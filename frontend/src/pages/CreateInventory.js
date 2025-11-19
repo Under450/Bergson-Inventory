@@ -966,6 +966,7 @@ const CreateInventory = () => {
                                   <SelectItem value="Fair">Fair</SelectItem>
                                   <SelectItem value="Poor">Poor</SelectItem>
                                   <SelectItem value="Damaged">Damaged</SelectItem>
+                                  <SelectItem value="N/A">N/A</SelectItem>
                                 </SelectContent>
                               </Select>
                             </div>
