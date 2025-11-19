@@ -534,7 +534,7 @@ const ReportPreview = () => {
 
             <h3 className="text-xl font-bold mt-6 mb-3 text-amber-900">Safety Certificate and Legislation Compliance</h3>
             <p className="leading-relaxed">
-              The safety certificate and legislation compliance checklists in this report are no guarantee, or report on, the adequacy of, or safety of, any such liability contents, merely a record that such steps have been offered by the Inventory Hive software to highlight issues that may exist at the property at the date of preparing this report. Inventory Hive accepts no responsibility for the contents of these steps. It is the responsibility of the Inspector and Tenant to agree upon the accuracy of these steps.
+              The safety certificate and legislation compliance checklists in this report are no guarantee, or report on, the adequacy of, or safety of, any such liability contents, merely a record that such steps have been offered by the Bergason software to highlight issues that may exist at the property at the date of preparing this report. Bergason accepts no responsibility for the contents of these steps. It is the responsibility of the Inspector and Tenant to agree upon the accuracy of these steps.
             </p>
           </div>
         </div>
