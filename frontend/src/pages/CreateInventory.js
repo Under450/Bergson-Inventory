@@ -161,19 +161,26 @@ const CreateInventory = () => {
   };
 
   const handleItemPhotoUpload = async (roomIndex, itemIndex, file) => {
+    if (!file) return;
+    
     const formData = new FormData();
     formData.append("file", file);
     formData.append("room_reference", rooms[roomIndex].room_name);
     formData.append("description", rooms[roomIndex].items[itemIndex].item_name);
     
     try {
-      const response = await axios.post(`${API}/upload/photo`, formData);
+      const response = await axios.post(`${API}/upload/photo`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       const updated = [...rooms];
       updated[roomIndex].items[itemIndex].photos.push(response.data.file_path);
       setRooms(updated);
       toast.success("Photo uploaded");
     } catch (error) {
-      toast.error("Failed to upload photo");
+      console.error("Upload error:", error);
+      toast.error("Failed to upload photo: " + (error.response?.data?.detail || error.message));
     }
   };
 
