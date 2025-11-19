@@ -426,17 +426,42 @@ const ReportPreview = () => {
                     </td>
                     <td className="border-2 border-gray-400 p-3 align-top text-center">
                       {item.photos && item.photos.length > 0 ? (
-                        <button
-                          onClick={() => {
-                            const photoVault = document.getElementById('photo-vault-section');
-                            if (photoVault) {
-                              photoVault.scrollIntoView({ behavior: 'smooth' });
-                            }
-                          }}
-                          className="text-blue-600 hover:text-blue-800 font-semibold text-sm underline"
-                        >
-                          📷 {item.photos.length} photo{item.photos.length > 1 ? 's' : ''}
-                        </button>
+                        <div className="flex flex-col gap-1">
+                          {(() => {
+                            const roomCode = {
+                              "Hallway": "HW", "Living Room": "LR", "Dining Room": "DR", "Kitchen": "KT",
+                              "WC": "WC", "Bathroom": "BT", "Ensuite": "EN", "Bedroom 1": "B1", "Bedroom 2": "B2",
+                              "Bedroom 3": "B3", "Bedroom 4": "B4", "Bedroom 5": "B5", "Front Garden": "FG",
+                              "Rear Garden": "RG", "Porch": "PO", "Stairs": "ST", "Landing": "LD",
+                              "Airing Cupboard": "AC", "Meter Cupboard": "MC", "Outbuilding": "OB",
+                              "Garage": "GR", "Loft": "LF", "Misc First Floor": "MF"
+                            }[room.room_name] || `R${roomIndex + 1}`;
+                            
+                            const photoStartIndex = inventory.rooms.slice(0, roomIndex).reduce((sum, r) => 
+                              sum + r.items.reduce((itemSum, i) => itemSum + (i.photos?.length || 0), 0), 0
+                            ) + room.items.slice(0, itemIndex).reduce((sum, i) => sum + (i.photos?.length || 0), 0);
+                            
+                            return item.photos.map((photo, photoIdx) => {
+                              const photoRef = `${roomCode}${roomIndex + 1}-${photoStartIndex + photoIdx + 1}`;
+                              return (
+                                <button
+                                  key={photoIdx}
+                                  onClick={() => {
+                                    const photoElement = document.getElementById(`photo-${photoRef}`);
+                                    if (photoElement) {
+                                      photoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                      photoElement.classList.add('ring-4', 'ring-yellow-400');
+                                      setTimeout(() => photoElement.classList.remove('ring-4', 'ring-yellow-400'), 2000);
+                                    }
+                                  }}
+                                  className="text-blue-600 hover:text-blue-800 font-semibold text-xs underline"
+                                >
+                                  📷 {photoRef}
+                                </button>
+                              );
+                            });
+                          })()}
+                        </div>
                       ) : (
                         <span className="text-gray-400 text-sm">-</span>
                       )}
