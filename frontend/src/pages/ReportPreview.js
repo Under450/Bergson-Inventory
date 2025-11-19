@@ -291,6 +291,22 @@ const ReportPreview = () => {
                       <div><span className="font-semibold">Serial:</span> {meter.serial_number}</div>
                       <div><span className="font-semibold">Location:</span> {meter.location}</div>
                     </div>
+                    {meter.photo && (
+                      <div className="mt-3">
+                        <img 
+                          src={`${BACKEND_URL}${meter.photo}`} 
+                          alt={`${meter.meter_type} Meter`} 
+                          className="w-64 h-48 object-cover border-2 border-gray-300 cursor-pointer"
+                          onClick={() => {
+                            const photoVault = document.getElementById('photo-vault-section');
+                            if (photoVault) photoVault.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Reference: HS-{index + 1} | Date: {inventory.property_overview.inspection_date}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
