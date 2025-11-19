@@ -126,9 +126,12 @@ class InventoryUpdate(BaseModel):
     status: Optional[str] = None
 
 class SignatureSubmit(BaseModel):
-    tenant_name: str
+    signer_name: str
+    signer_role: str  # "Inspector" or "Tenant"
     signature_data: str
     ip_address: str = ""
+    email: str = ""
+    tenant_present: Optional[bool] = None
 
 # API Routes
 @api_router.get("/")
