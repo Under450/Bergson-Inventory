@@ -277,7 +277,7 @@ const ReportPreview = () => {
         </div>
 
         {/* Health & Safety */}
-        {(inventory.health_safety.meters.length > 0 || inventory.health_safety.safety_items.length > 0) && (
+        {(inventory.health_safety.meters.length > 0 || inventory.health_safety.safety_items.length > 0 || inventory.health_safety.compliance_documents?.length > 0) && (
           <div className="bg-white border-2 border-black p-8 mb-8 shadow-lg">
             <h2 className="text-3xl font-bold mb-4 pb-3 border-b-2 border-black logo-font">Health & Safety</h2>
             
