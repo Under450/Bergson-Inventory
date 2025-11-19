@@ -541,7 +541,11 @@ const ReportPreview = () => {
                     <h3 className="text-xl font-bold mb-4 text-black">{reference}</h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {photos.map((photo, index) => (
-                        <div key={index} className="border-2 border-gray-300 hover:border-black transition-all cursor-pointer relative">
+                        <div 
+                          key={index} 
+                          id={`photo-${photo.photoRef}`}
+                          className="border-2 border-gray-300 hover:border-black transition-all cursor-pointer relative scroll-mt-24"
+                        >
                           <img 
                             src={`${BACKEND_URL}${photo.path}`} 
                             alt={photo.description} 
