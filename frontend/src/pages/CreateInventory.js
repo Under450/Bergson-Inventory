@@ -121,18 +121,26 @@ const CreateInventory = () => {
 
   const handleDocumentUpload = async (e) => {
     const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    
     for (const file of files) {
       const formData = new FormData();
       formData.append("file", file);
       
       try {
-        const response = await axios.post(`${API}/upload/document`, formData);
+        const response = await axios.post(`${API}/upload/document`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         setComplianceDocs(prev => [...prev, { path: response.data.file_path, name: response.data.original_filename }]);
         toast.success("Document uploaded");
       } catch (error) {
-        toast.error("Failed to upload document");
+        console.error("Upload error:", error);
+        toast.error("Failed to upload document: " + (error.response?.data?.detail || error.message));
       }
     }
+    e.target.value = null; // Reset input
   };
 
   const addItemToRoom = (roomIndex) => {
