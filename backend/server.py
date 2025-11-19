@@ -87,12 +87,18 @@ class PhotoMetadata(BaseModel):
     timestamp: str
     description: str = ""
 
-class Signature(BaseModel):
-    tenant_name: str
+class SignatureEntry(BaseModel):
+    signer_name: str
+    signer_role: str  # "Inspector" or "Tenant"
     signature_data: str  # Base64 encoded signature
     signed_at: str
     ip_address: str = ""
-    is_locked: bool = True
+    email: str = ""
+
+class Signature(BaseModel):
+    signatures: List[SignatureEntry] = []
+    tenant_present_during_inspection: Optional[bool] = None
+    is_locked: bool = False
 
 class Inventory(BaseModel):
     model_config = ConfigDict(extra="ignore")
