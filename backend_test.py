@@ -189,23 +189,107 @@ class InventoryAPITester:
             return True
         return False
 
-    def test_submit_signature(self):
-        """Test signature submission"""
-        if not self.shareable_token:
-            print("❌ No shareable token available for testing")
+    def test_signature_workflow(self):
+        """Test complete signature workflow with specific token"""
+        # Use the specific token from the review request
+        test_token = "f9462b2d-0f81-4455-830a-3fb474b687f3"
+        
+        print(f"\n🔍 Testing Complete Signature Workflow with token: {test_token}")
+        
+        # First, verify we can get the inventory by token
+        success, inventory = self.run_test("Get Inventory by Test Token", "GET", f"sign/{test_token}", 200)
+        if not success:
+            print("❌ Cannot retrieve inventory with test token")
             return False
         
-        signature_data = {
-            "tenant_name": "Test Tenant Signature",
+        print(f"   Retrieved inventory: {inventory.get('property_overview', {}).get('address', 'Unknown')}")
+        
+        # Test 1: Submit first signature (Tenant)
+        signature_data_1 = {
+            "signer_name": "Test Tenant",
+            "signer_role": "Tenant",
             "signature_data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+            "email": "test@example.com",
+            "tenant_present": True,
             "ip_address": "127.0.0.1"
         }
         
-        success, response = self.run_test("Submit Signature", "POST", f"sign/{self.shareable_token}/submit", 200, signature_data)
-        if success and 'verification_link' in response:
-            print(f"   Signature submitted, verification link: {response['verification_link']}")
-            return True
-        return False
+        success, response = self.run_test("Submit First Signature (Tenant)", "POST", f"sign/{test_token}/submit", 200, signature_data_1)
+        if not success:
+            return False
+        print(f"   First signature submitted successfully")
+        
+        # Test 2: Submit second signature (Inspector)
+        signature_data_2 = {
+            "signer_name": "Test Inspector",
+            "signer_role": "Inspector", 
+            "signature_data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+            "email": "inspector@example.com",
+            "tenant_present": True,
+            "ip_address": "127.0.0.1"
+        }
+        
+        success, response = self.run_test("Submit Second Signature (Inspector)", "POST", f"sign/{test_token}/submit", 200, signature_data_2)
+        if not success:
+            return False
+        print(f"   Second signature submitted successfully")
+        
+        # Test 3: Verify multiple signatures were added
+        success, inventory_with_sigs = self.run_test("Get Inventory with Signatures", "GET", f"sign/{test_token}", 200)
+        if success and inventory_with_sigs.get('signature'):
+            signatures = inventory_with_sigs['signature'].get('signatures', [])
+            print(f"   Found {len(signatures)} signatures in document")
+            if len(signatures) >= 2:
+                print("✅ Multiple signatures successfully added")
+            else:
+                print("❌ Expected at least 2 signatures")
+                return False
+        else:
+            print("❌ No signature data found")
+            return False
+        
+        # Test 4: Lock the document
+        success, response = self.run_test("Lock Document", "POST", f"sign/{test_token}/lock", 200)
+        if not success:
+            return False
+        print(f"   Document locked successfully")
+        
+        # Test 5: Verify document is locked
+        success, locked_inventory = self.run_test("Verify Document Locked", "GET", f"sign/{test_token}", 200)
+        if success and locked_inventory.get('signature', {}).get('is_locked'):
+            print("✅ Document is properly locked")
+        else:
+            print("❌ Document is not locked")
+            return False
+        
+        # Test 6: Try to add signature to locked document (should fail)
+        signature_data_3 = {
+            "signer_name": "Another Tenant",
+            "signer_role": "Tenant",
+            "signature_data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
+            "email": "another@example.com",
+            "tenant_present": True,
+            "ip_address": "127.0.0.1"
+        }
+        
+        success, response = self.run_test("Try Adding Signature to Locked Document (Should Fail)", "POST", f"sign/{test_token}/submit", 403, signature_data_3)
+        if success:
+            print("✅ Locked document correctly rejected new signature")
+        else:
+            print("❌ Locked document should have rejected new signature with 403 status")
+            return False
+        
+        # Test 7: Verify signature via verification endpoint
+        success, verification = self.run_test("Verify Signatures", "GET", f"verify/{test_token}", 200)
+        if success and verification.get('status') == 'verified':
+            print("✅ Signature verification successful")
+            print(f"   Property: {verification.get('property_address', 'Unknown')}")
+            print(f"   Authentic: {verification.get('is_authentic', False)}")
+        else:
+            print("❌ Signature verification failed")
+            return False
+        
+        return True
 
     def test_verify_signature(self):
         """Test signature verification"""
