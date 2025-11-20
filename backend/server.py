@@ -280,7 +280,7 @@ async def submit_signature(token: str, signature_data: SignatureSubmit):
         raise HTTPException(status_code=404, detail="Invalid link")
     
     # Get existing signature or create new one
-    existing_signature = inventory.get("signature", {})
+    existing_signature = inventory.get("signature") or {}
     if existing_signature.get("is_locked"):
         raise HTTPException(status_code=403, detail="Document already locked")
     
