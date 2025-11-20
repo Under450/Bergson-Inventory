@@ -88,8 +88,14 @@ const SignaturePage = () => {
     e.preventDefault();
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const coords = getCoordinates(e);
     
+    // Ensure drawing context is properly configured
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    const coords = getCoordinates(e);
     ctx.beginPath();
     ctx.moveTo(coords.x, coords.y);
     setIsDrawing(true);
@@ -110,7 +116,18 @@ const SignaturePage = () => {
   const stopDrawing = () => {
     if (isDrawing) {
       const canvas = canvasRef.current;
-      setSignatureData(canvas.toDataURL());
+      const ctx = canvas.getContext('2d');
+      
+      // Check if canvas has actual drawing content (not blank)
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const hasDrawing = imageData.data.some((channel, index) => {
+        // Check alpha channel (every 4th value)
+        return index % 4 === 3 && channel > 0;
+      });
+      
+      if (hasDrawing) {
+        setSignatureData(canvas.toDataURL());
+      }
     }
     setIsDrawing(false);
   };
