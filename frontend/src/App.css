@@ -111,8 +111,71 @@ h1, h2, h3, h4, h5, h6 {
   background: white;
 }
 
+/* Print Styles for PDF Generation */
 @media print {
   .no-print {
     display: none !important;
+  }
+  
+  /* Force single continuous page without breaks */
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Prevent page breaks within sections */
+  .bg-white,
+  section,
+  div[class*="border"],
+  table,
+  .card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  /* Remove margins that could cause pagination */
+  * {
+    margin-top: 0 !important;
+  }
+  
+  /* Ensure content flows continuously */
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+  
+  /* Prevent orphans and widows */
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  /* Keep headers with content */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  
+  /* Preserve colors and backgrounds */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* Ensure images stay with their sections */
+  img {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    max-width: 100%;
+  }
+  
+  /* Keep table rows together */
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }
