@@ -111,11 +111,14 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Endpoint exists and handles signature submission. Need to verify after frontend fix."
+      - working: true
+        agent: "testing"
+        comment: "COMPREHENSIVE TESTING COMPLETED: Fixed null signature handling bug in backend. All signature workflow tests passing: 1) Multiple signatures can be added to same document (tested with Tenant + Inspector), 2) Document locking works correctly, 3) Locked documents properly reject new signatures with 403 status, 4) Signature retrieval and verification working perfectly. Used test token f9462b2d-0f81-4455-830a-3fb474b687f3 successfully."
 
 frontend:
   - task: "Signature canvas drawing and button functionality"
