@@ -168,3 +168,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Fixed signature canvas initialization and added comprehensive print CSS. Signature button now works correctly after drawing. Need to test complete flow with backend testing agent to verify signature submission and PDF generation works end-to-end."
+  - agent: "testing"
+    message: "BACKEND TESTING COMPLETE: All signature workflow tests passing (19/19 tests, 100% success rate). Fixed critical null signature handling bug in backend server.py line 283. Comprehensive signature workflow verified: multiple signatures, document locking, locked document rejection, and signature verification all working correctly. Backend APIs are fully functional for signature workflow."
