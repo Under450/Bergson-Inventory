@@ -332,8 +332,7 @@ def main():
         tester.test_file_uploads,
         tester.test_generate_shareable_link,
         tester.test_get_inventory_by_token,
-        tester.test_submit_signature,
-        tester.test_verify_signature,
+        tester.test_signature_workflow,  # New comprehensive signature workflow test
         # Note: Not deleting inventory to keep it for frontend testing
         # tester.test_delete_inventory,
     ]
